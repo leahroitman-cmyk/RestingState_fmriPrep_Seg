@@ -49,9 +49,13 @@ from pathlib import Path
 from collections import defaultdict
 import numpy as np
 
-EXCEL = "/Users/leahanna/2011Neurondata/Neuron_consensus_264.xlsx"
-CORR  = "/Users/leahanna/MRI3/out/analysis/sub-pa1372/sm8mm/power264_corr_labels.csv"
-OUTDIR= "/Users/leahanna/MRI3/out/analysis/sub-pa1372/sm8mm"
+SUB = "sub-pa1372"        # byt till ditt subject
+SMOOTH = "sm8mm"          # byt till rätt smoothing-mapp (sm0mm/sm4mm/sm8mm)
+BASE_ANALYSIS = Path.home() / "MRI3" / "out" / "analysis" / SUB / SMOOTH
+
+EXCEL = str(Path.home() / "2011Neurondata" / "Neuron_consensus_264.xlsx")
+CORR  = str(BASE_ANALYSIS / "power264_corr_labels.csv")  # byt ev. till "power264_corr.csv"
+OUTDIR= str(BASE_ANALYSIS)
 Path(OUTDIR).mkdir(parents=True, exist_ok=True)
 
 xl = pd.ExcelFile(EXCEL)

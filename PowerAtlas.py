@@ -53,15 +53,15 @@ from scipy.spatial import cKDTree
 # =========================
 # STEG 0 — hitta fMRIPrep-filer
 # =========================
-BASE = Path("/Users/leahanna/MRI3/out")
-SUB  = "sub-pa1372"
-DERIV = BASE / "fmriprep-25.2.2" / SUB
+BASE = Path("/Users/leahanna/MRI3/out") # <-- byt till din faktiska bas
+SUB  = "sub-pa1372" # <-- byt till ditt subject, t.ex. "sub-01"
+DERIV = BASE / "fmriprep-25.2.2" / SUB  #<-- byt "fmriprep-25.2.2" om din mapp heter annat
 SMOOTH_FWHM = 8.0  # För sfärer
 
 PIPELINE = "labels"  # "labels" eller "spheres"
 LABELS_SMOOTH_FWHM = 4.0  # För labels
 
-OUT_BASE = Path.home() / "MRI3" / "out" / "analysis" / SUB
+OUT_BASE = Path.home() /"MRI3" / "out" / "analysis" / SUB
 OUT_BASE.mkdir(parents=True, exist_ok=True)
 sm_tag = int(LABELS_SMOOTH_FWHM or 0) if PIPELINE == "labels" else int(SMOOTH_FWHM)
 OUT = OUT_BASE / f"sm{sm_tag}mm"
