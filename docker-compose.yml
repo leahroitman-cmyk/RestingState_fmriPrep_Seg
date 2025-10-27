@@ -1,0 +1,30 @@
+services:
+  fmriprep:
+    # Use env var FMRIPREP_VERSION if set; default to 25.2.2
+    image: "nipreps/fmriprep:${FMRIPREP_VERSION:-25.2.2}" #package from docker
+    stdin_open: true  # -ti
+    tty: true         # -ti
+    environment:
+      # Make license discoverable by FreeSurfer/fMRIPrep
+      FS_LICENSE: /opt/freesurfer/license.txt
+    # BIDS dataset (read-only), outputs, and working directory
+    volumes:
+      - ./ds003673:/data:ro
+      - ./out:/out
+      - ./work:/work
+      # Mount your FreeSurfer license file to the standard path
+      - ./license.txt:/opt/freesurfer/license.txt:ro
+
+      # Optional: FreeSurfer license (uncomment if available)
+      # - ${HOME}/.licenses/freesurfer/license.txt:/opt/freesurfer/license.txt:ro
+    # Put required positional args in entrypoint so extra flags append when using `docker compose run`
+    entrypoint: [
+      "fmriprep",
+      "/data",
+      "/out/fmriprep-${FMRIPREP_VERSION:-25.2.2}",
+      "participant",
+      "-w", "/work"
+    ]
+    # Keep command empty by default; you can pass extra args on the CLI, e.g.:
+    # docker compose run --rm fmriprep --participant-label 17017 --output-spaces MNI152NLin2009cAsym:res-2
+    command: []
